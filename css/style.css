@@ -2,6 +2,9 @@
 @import url(../css/font-root-styles/general-sans.css);
 @import url(../css/font-root-styles/okinesans.css);
 @import url(../css/font-root-styles/satoshi.css);
+@import url(../css/font-root-styles/general-sans.css);
+@import url(../css/font-root-styles/satoshi.css);
+
 
 /* Box Model Hack */
 * {
@@ -109,14 +112,28 @@ font-family: 'Fira Sans', sans-serif;
 /*******************************************/
 /* HEADER AND NAV STYLING */
 header {
-  padding: 1rem 2rem;
+  padding: 1.5rem 2rem;
   border-bottom: 1px solid rgb(38, 50, 67);
+  position: sticky;
+  top: 0;
+  background-color: rgba(34, 40, 49, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 100;
 }
+
 
 nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; /* This will now work correctly */
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* The logo container now has a defined role in the flex layout */
+nav > a {
+  flex-shrink: 0; /* Prevents the logo from shrinking */
 }
 
 nav img {
@@ -124,27 +141,50 @@ nav img {
   z-index: 2;
 }
 
+/* The nav-menu takes up the remaining space and aligns its content to the right */
 .nav-menu {
-  position: fixed;
-  display: contents;
-  top: -2rem;
-  right: -200vh;
-  height: 100vh;
-  width: 75vw;
-
-  list-style: none;
-  padding: 0;
+  flex-grow: 1; /* Allows the menu to take available space */
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end; /* Aligns all nav items to the right */
   align-items: center;
-  gap: 2.5rem;
-
-  background: rgb(31, 38, 49);
-  transition: all 0.5s ease-in-out;
-
-  z-index: 2;
+  gap: 3rem; /* Adjust gap as needed */
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
+
+.nav-link a {
+  font-family: "Satoshi 500", sans-serif;
+  font-size: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.3s, border-color 0.3s;
+  white-space: nowrap;
+}
+
+.nav-link a:hover {
+  color: #8faaff;
+  border-bottom-color: #8faaff;
+}
+
+
+/* Special styling for the Resume button */
+.resume-button a {
+  padding: 0.8rem 1.8rem;
+  border: 1px solid #7e92d9;
+  border-radius: 6px;
+  color: #7e92d9;
+  background-color: transparent;
+  transition: all 0.3s ease;
+}
+
+.resume-button a:hover {
+  background-color: rgba(126, 146, 217, 0.1);
+  color: #aaccff;
+  border-bottom-color: transparent;
+}
+
+
 
 .nav-menu.is-active {
   top: 0;
@@ -1115,4 +1155,201 @@ footer span {
 .project + .project {
   margin-top: 80px;
   clear: both;
+}
+
+/* =========================================
+   FIX FOR EXPERIENCE SECTION
+   ========================================= */
+.experience-container {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  padding-left: 3rem; /* Space for the timeline */
+}
+/* The timeline vertical bar */
+.experience-container::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  bottom: 10px;
+  width: 2px;
+  background-color: rgb(50, 60, 80);
+}
+.experience-entry {
+  position: relative;
+  margin-bottom: 3rem;
+  padding-left: 2rem;
+}
+/* The circle on the timeline */
+.experience-entry::before {
+  content: '';
+  position: absolute;
+  left: -26px; /* Position over the timeline bar */
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #7e92d9;
+  border: 2px solid rgb(34, 40, 49);
+}
+.experience-meta {
+  font-family: "Satoshi 500";
+  color: rgb(178, 185, 207);
+  font-size: 1.5rem;
+}
+.experience-date {
+  font-style: italic;
+  font-size: 1.3rem;
+  color: rgb(143, 148, 164);
+  margin-left: 1rem;
+}
+.experience-company {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0.2rem 0 1rem 0;
+  color: #fff;
+}
+.experience-highlights {
+  list-style-type: disc;
+  padding-left: 1.8rem;
+  margin: 1rem 0 0 0;
+}
+
+
+/* Achievements Section Container */
+.achievements-container {
+  max-width: 75rem;
+  margin: 0 auto;
+}
+
+.achievements-list {
+  list-style: none;
+  padding: 0;
+}
+
+.achievements-list li {
+  padding: 1rem 0;
+  border-bottom: 1px solid rgb(38, 50, 67); /* Matches your header border */
+  line-height: 1.6;
+}
+
+.achievements-list li:last-child {
+  border-bottom: none;
+}
+
+.achievements-list strong {
+    color: rgb(204, 213, 243); /* Brighter color for the achievement title */
+    font-family: "Satoshi 700", sans-serif;
+}
+
+.experience-links {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.cta-link {
+  display: inline-block;
+  padding: 0.4rem 1.2rem;
+  border-radius: 2rem;
+  background-color: rgb(45, 55, 70); /* A slightly lighter background */
+  color: rgb(178, 185, 207);
+  font-size: 1.3rem;
+  font-family: "Satoshi 500", sans-serif;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.cta-link:hover {
+  background-color: rgb(126, 146, 217);
+  color: rgb(34, 40, 49);
+}
+
+
+/* Enhanced Achievements Section Styles */
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.achievement-card {
+  background-color: rgb(38, 50, 67); /* Matches project card background */
+  padding: 2rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  border: 1px solid rgb(50, 60, 80); /* Subtle border */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.achievement-icon {
+  font-size: 2rem; /* Larger icon */
+  color: rgb(126, 146, 217); /* Matches separator line color */
+  margin-top: 0.2rem;
+}
+
+.achievement-text h4 {
+  margin: 0 0 0.5rem 0;
+  font-family: "Satoshi 700", sans-serif;
+  font-size: 1.6rem;
+  color: rgb(204, 213, 243);
+}
+
+.achievement-text p {
+  margin: 0;
+  line-height: 1.6;
+  font-size: 1.4rem;
+}
+
+.cert-link {
+  text-decoration: none;
+  color: #6688ff;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.cert-link:hover {
+  text-decoration: underline;
+  color: #8faaff;
+}
+
+
+.skills-section {
+  margin-top: 4rem;
+}
+.skills-section h4 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: rgb(220, 230, 255);
+}
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+}
+.skills-grid li {
+  background-color: rgb(45, 55, 70);
+  text-align: center;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  font-family: "Satoshi 500", sans-serif;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.skills-grid li:hover {
+    transform: translateY(-3px);
+    background-color: #7e92d9;
+    color: rgb(34, 40, 49);
 }
